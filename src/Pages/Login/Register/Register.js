@@ -22,9 +22,7 @@ const Register = () => {
     }
     let errorElement
     if (error) {
-        errorElement = <div>
-            <p className='text-danger'>Error: {error?.message}</p>
-        </div>
+        errorElement = <p className='text-danger'>Error: {error?.message}</p>
     }
     const handleRegister = e => {
         e.preventDefault()
@@ -40,7 +38,7 @@ const Register = () => {
     }
     return (
         <div className='register-form'>
-            <h2 style={{ textAlign: 'center' }}>Register Please</h2>
+            <h2 className='text-center text-primary my-4'>Register Please</h2>
             <form onSubmit={handleRegister} >
                 <input type="text" name="text" id="text" placeholder='Your Name' required />
 
@@ -50,10 +48,13 @@ const Register = () => {
 
                 <input type="password" name="confirmPassword" id="confirm-password" placeholder='Confirm Password' required />
 
-                <input type="submit" value="Register" />
+                <input type="checkbox" name="terms" id="terms" />
+                <label htmlFor="terms">Accept Genius Car Terms And Condition</label>
+
+                <input className='w-50 d-block mx-auto btn btn-primary mt-2' type="submit" value="Register" />
             </form>
             {errorElement}
-            <p>Already have an account? <Link to='/login' onClick={navigateLogin} className='text-danger pe-auto text-decoration-none'>Please Login</Link></p>
+            <p>Already have an account? <Link to='/login' onClick={navigateLogin} className='text-primary pe-auto text-decoration-none'>Please Login</Link></p>
             <SocialLogin></SocialLogin>
         </div >
     )
