@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import './Register.css'
@@ -6,6 +6,7 @@ import auth from '../../../firebase.init'
 import SocialLogin from '../SocialLogin/SocialLogin'
 
 const Register = () => {
+    const [agree, setAgree] = useState(false)
     const [
         createUserWithEmailAndPassword,
         user,
@@ -30,11 +31,16 @@ const Register = () => {
         const email = e.target.email.value
         const password = e.target.password.value
         const confirmPassword = e.target.confirmPassword.value
+
+
         if (password !== confirmPassword) {
-            return
+            return errorElement = <p className='text-danger'>Error: {error?.message}</p>
+        }
+        if (agree) {
+            createUserWithEmailAndPassword(email, password)
         }
 
-        createUserWithEmailAndPassword(email, password)
+
     }
     return (
         <div className='register-form'>
@@ -48,10 +54,13 @@ const Register = () => {
 
                 <input type="password" name="confirmPassword" id="confirm-password" placeholder='Confirm Password' required />
 
-                <input type="checkbox" name="terms" id="terms" />
-                <label htmlFor="terms">Accept Genius Car Terms And Condition</label>
+                <input onClick={() => setAgree(!agree)} type="checkbox" name="terms" id="terms" />
+                <label className={`ps-2 ${agree ? '' : 'text-danger'}`} htmlFor="terms">Accept Genius Car Terms And Condition</label>
 
-                <input className='w-50 d-block mx-auto btn btn-primary mt-2' type="submit" value="Register" />
+                <input
+                    disabled={!agree}
+                    className='w-50 d-block mx-auto btn btn-primary mt-2' type="submit"
+                    value="Register" />
             </form>
             {errorElement}
             <p>Already have an account? <Link to='/login' onClick={navigateLogin} className='text-primary pe-auto text-decoration-none'>Please Login</Link></p>
