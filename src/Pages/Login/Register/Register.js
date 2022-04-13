@@ -20,12 +20,21 @@ const Register = () => {
     if (user) {
         navigate('/home')
     }
+    let errorElement
+    if (error) {
+        errorElement = <div>
+            <p className='text-danger'>Error: {error?.message}</p>
+        </div>
+    }
     const handleRegister = e => {
         e.preventDefault()
         const name = e.target.name.value
         const email = e.target.email.value
         const password = e.target.password.value
         const confirmPassword = e.target.confirmPassword.value
+        if (password !== confirmPassword) {
+            return
+        }
 
         createUserWithEmailAndPassword(email, password)
     }
@@ -43,6 +52,7 @@ const Register = () => {
 
                 <input type="submit" value="Register" />
             </form>
+            {errorElement}
             <p>Already have an account? <Link to='/login' onClick={navigateLogin} className='text-danger pe-auto text-decoration-none'>Please Login</Link></p>
             <SocialLogin></SocialLogin>
         </div >
