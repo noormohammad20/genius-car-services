@@ -4,7 +4,8 @@ import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-fireb
 import './Register.css'
 import auth from '../../../firebase.init'
 import SocialLogin from '../SocialLogin/SocialLogin'
-import { async } from '@firebase/util'
+import Loading from '../../Shared/Loading/Loading'
+
 
 const Register = () => {
     const [agree, setAgree] = useState(false)
@@ -21,13 +22,20 @@ const Register = () => {
     const navigateLogin = () => {
         navigate('/login')
     }
+
     if (user) {
         console.log('user', user)
     }
+
+    if (loading || updating) {
+        return <Loading></Loading>
+    }
+
     let errorElement
     if (error) {
         errorElement = <p className='text-danger'>Error: {error?.message}</p>
     }
+
     const handleRegister = async (e) => {
         e.preventDefault()
         const name = e.target.name.value
@@ -69,6 +77,7 @@ const Register = () => {
             {errorElement}
             <p>Already have an account? <Link to='/login' onClick={navigateLogin} className='text-primary pe-auto text-decoration-none'>Please Login</Link></p>
             <SocialLogin></SocialLogin>
+
         </div >
     )
 }

@@ -5,16 +5,22 @@ import github from '../../../images/social/github.png'
 import { useSignInWithFacebook, useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth'
 import auth from '../../../firebase.init'
 import { useNavigate } from 'react-router-dom'
+import Loading from '../../Shared/Loading/Loading'
 
 const SocialLogin = () => {
-    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth)
-    const [signInWithGithub, user1, loading1, error1] = useSignInWithGithub(auth)
-    const [signInWithFacebook, user2, loading2, error2] = useSignInWithFacebook(auth)
+    const [signInWithGoogle, user, googleLoading, googleError] = useSignInWithGoogle(auth)
+    const [signInWithGithub, user1, githubLoading, githubError] = useSignInWithGithub(auth)
+    const [signInWithFacebook, user2, facebookLoading, facebookError] = useSignInWithFacebook(auth)
     const navigate = useNavigate()
 
     let errorElement
-    if (error || error1 || error2) {
-        errorElement = <p className='text-danger'>Error: {error?.message} {error1?.message} {error2?.message}</p>
+
+    if (googleLoading || githubLoading || facebookLoading) {
+        return <Loading></Loading>
+    }
+
+    if (googleError || githubError || facebookError) {
+        errorElement = <p className='text-danger'>Error: {googleError?.message} {githubError?.message} {facebookError?.message}</p>
     }
     if (user || user1 || user2) {
         navigate('/home')
