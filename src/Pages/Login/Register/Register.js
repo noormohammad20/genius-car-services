@@ -34,7 +34,7 @@ const Register = () => {
 
 
         if (password !== confirmPassword) {
-            return errorElement = <p className='text-danger'>Error: {error?.message}</p>
+            return
         }
         if (agree) {
             createUserWithEmailAndPassword(email, password)
