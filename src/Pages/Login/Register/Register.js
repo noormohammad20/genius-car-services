@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth'
 import './Register.css'
 import auth from '../../../firebase.init'
 import SocialLogin from '../SocialLogin/SocialLogin'
+import { async } from '@firebase/util'
 
 const Register = () => {
     const [agree, setAgree] = useState(false)
@@ -12,20 +13,22 @@ const Register = () => {
         user,
         loading,
         error,
-    ] = useCreateUserWithEmailAndPassword(auth)
+    ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true })
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth)
+
     const navigate = useNavigate()
 
     const navigateLogin = () => {
         navigate('/login')
     }
     if (user) {
-        navigate('/home')
+        console.log('user', user)
     }
     let errorElement
     if (error) {
         errorElement = <p className='text-danger'>Error: {error?.message}</p>
     }
-    const handleRegister = e => {
+    const handleRegister = async (e) => {
         e.preventDefault()
         const name = e.target.name.value
         const email = e.target.email.value
@@ -36,10 +39,11 @@ const Register = () => {
         if (password !== confirmPassword) {
             return
         }
-        if (agree) {
-            createUserWithEmailAndPassword(email, password)
-        }
 
+        await createUserWithEmailAndPassword(email, password)
+        await updateProfile({ displayName: name })
+        console.log('Updated profile')
+        navigate('/home')
 
     }
     return (
