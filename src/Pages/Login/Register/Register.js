@@ -5,6 +5,7 @@ import './Register.css'
 import auth from '../../../firebase.init'
 import SocialLogin from '../SocialLogin/SocialLogin'
 import Loading from '../../Shared/Loading/Loading'
+import PageTitle from '../../Shared/PageTitle/PageTitle'
 
 
 const Register = () => {
@@ -56,6 +57,7 @@ const Register = () => {
     }
     return (
         <div className='register-form'>
+            <PageTitle title="Register"></PageTitle>
             <h2 className='text-center text-primary my-4'>Register Please</h2>
             <form onSubmit={handleRegister} >
                 <input type="text" name="text" id="text" placeholder='Your Name' required />
