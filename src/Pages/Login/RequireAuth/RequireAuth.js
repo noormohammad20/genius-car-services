@@ -10,13 +10,13 @@ const RequireAuth = ({ children }) => {
     const location = useLocation()
     const [sendEmailVerification, sending, error] = useSendEmailVerification(auth)
 
-    if (loading) {
+    if (loading || sending) {
         return <Loading></Loading>
     }
     if (!user) {
         return <Navigate to="/login" state={{ from: location }} replace />
     }
-    if (!user.emailVerified) {
+    if (user?.providerData[0]?.providerId === 'password' && !user.emailVerified) {
         return <div className='text-center my-5'>
             <h3 className="text-danger my-4">Your Email Is Not Verified</h3>
             <h5 className='text-success my-4'>Please Verify Your Email Address</h5>
