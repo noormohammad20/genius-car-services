@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 import auth from '../../../firebase.init'
 import Loading from '../../Shared/Loading/Loading'
 import SocialLogin from '../SocialLogin/SocialLogin'
@@ -80,7 +80,7 @@ const Login = () => {
             <p>New To Genius Car? <Link to='/register' onClick={navigateRegister} className='text-primary pe-auto text-decoration-none'>Please Register</Link></p>
             <p>Forget Password? <button onClick={resetPassword} className='btn btn-link text-primary pe-auto text-decoration-none'>Reset Password</button></p>
             <SocialLogin></SocialLogin>
-            <ToastContainer></ToastContainer>
+
         </div>
     )
 }
