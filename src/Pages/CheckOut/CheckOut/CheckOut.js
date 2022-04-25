@@ -10,7 +10,6 @@ const CheckOut = () => {
     const { serviceId } = useParams()
     const [service] = useServiceDetail(serviceId)
     const [user] = useAuthState(auth)
-
     const handlePlaceOrder = e => {
         e.preventDefault()
         const order = {
@@ -31,9 +30,9 @@ const CheckOut = () => {
     }
     return (
         <div className='w-50 mx-auto'>
-            <h2>Please Service : {service?.name}</h2>
+            <h2>Please Service : {service.name}</h2>
             <form onSubmit={handlePlaceOrder}>
-                <input className='w-100 mb-2' type="text" name="name" value={user.displayName} placeholder='Name' required readOnly disabled />
+                <input className='w-100 mb-2' type="text" name="name" value={user?.displayName} placeholder='Name' required readOnly disabled />
                 <br />
                 <input className='w-100 mb-2' type="email" name="email" value={user?.email} placeholder='Email' required readOnly disabled />
                 <br />

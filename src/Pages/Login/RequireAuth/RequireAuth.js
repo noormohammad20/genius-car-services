@@ -16,6 +16,7 @@ const RequireAuth = ({ children }) => {
     if (!user) {
         return <Navigate to="/login" state={{ from: location }} replace />
     }
+
     if (user?.providerData[0]?.providerId === 'password' && !user.emailVerified) {
         return <div className='text-center my-5'>
             <h3 className="text-danger my-4">Your Email Is Not Verified</h3>
